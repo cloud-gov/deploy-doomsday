@@ -1,0 +1,76 @@
+name: doomsday
+
+instance_groups:
+- azs:
+  - z1
+  instances: 1
+  jobs:
+  - name: doomsday
+    properties:
+      backends:
+      - name: development
+        properties:
+          address: ((dev.address))
+          auth:
+            client_id: ((dev.client))
+            client_secret: ((dev.client-secret))
+            grant_type: client_credentials
+          insecure_skip_verify: true # needed because the bosh cert isn't part of the trust store.
+        type: credhub
+      - name: staging
+        properties:
+          address: ((staging.address))
+          auth:
+            client_id: ((staging.client))
+            client_secret: ((staging.client-secret))
+            grant_type: client_credentials
+          insecure_skip_verify: true # needed because the bosh cert isn't part of the trust store.
+        type: credhub
+      - name: production
+        properties:
+          address: ((prod.address))
+          auth:
+            client_id: ((prod.client))
+            client_secret: ((prod.client-secret))
+            grant_type: client_credentials
+          insecure_skip_verify: true # needed because the bosh cert isn't part of the trust store.
+        type: credhub
+      notifications:
+        backend:
+          properties:
+            notify_ok: false
+            webhook: ((/slack-webhook))
+          type: slack
+        doomsday_url: "https://doomsday.fr.cloud.gov" 
+        schedule:
+          properties:
+            interval: 1440
+          type: constant
+      server:
+        auth:
+          type: none
+        port: 80
+    release: doomsday
+  name: doomsday
+  networks:
+  - name: production-monitoring
+  stemcell: default
+  vm_type: errand_small
+
+releases:
+- name:    doomsday
+  version: 0.8.1
+  url:     https://github.com/doomsday-project/doomsday-boshrelease/releases/download/v0.8.1/doomsday-0.8.1.tgz
+  sha1:    d228ec6bed298fd70850c56180e32a47c09d78fd
+
+stemcells:
+- alias: default
+  os: ubuntu-xenial
+  version: latest
+
+update:
+  canaries: 1
+  canary_watch_time: 30000-600000
+  max_in_flight: 1
+  serial: true
+  update_watch_time: 30000-600000

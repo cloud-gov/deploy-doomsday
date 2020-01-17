@@ -1,0 +1,78 @@
+resource_types:
+- name: s3-iam
+  type: docker-image
+  source:
+    repository: 18fgsa/s3-resource
+- name: slack-notification
+  type: docker-image
+  source:
+    repository: cfcommunity/slack-notification-resource
+- name: bosh-deployment
+  type: docker-image
+  source:
+    repository: cloudfoundry/bosh-deployment-resource
+
+resources:
+- name: doomsday
+  type: bosh-deployment
+  source:
+    target: ((bosh.target))
+    client: ((bosh.client))
+    client_secret: ((bosh.client-secret))
+    ca_cert: ((bosh.ca-cert))
+    deployment: doomsday
+- name: doomsday-deployment-src
+  type: git
+  source:
+    uri: ((git.source))
+    branch: ((git.branch))
+- name: slack
+  type: slack-notification
+  source:
+    url: ((/slack-webhook))
+- name: pipeline-variables
+  type: s3-iam
+  source:
+    bucket: ((aws.concourse-bucket))
+    region_name: ((aws.region))
+    versioned_file: cg-deploy-doomsday.yml
+
+jobs:
+- name: reconfigure
+  plan:
+    - get: doomsday-deployment-src
+      trigger: true
+    - get: pipeline-variables
+      trigger: true
+    - set_pipeline: deploy-doomsday
+      file: doomsday-deployment-src/ci/pipeline.yml
+      var_files:
+        - pipeline-variables/cg-deploy-doomsday.yml
+- name: doomsday-deployment
+  plan:
+    - in_parallel:
+      - get: doomsday
+      - get: doomsday-deployment-src
+        passed:
+        - reconfigure
+        trigger: true
+    - put: doomsday
+      params:
+        manifest: doomsday-deployment-src/manifest.yml
+        fix: true
+  on_success:
+    put: slack
+    params:
+      text: |
+        :white_check_mark: Deployed Doomsday in Tooling
+        <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+      username: ((/slack-user))
+      icon_url: ((/slack-icon-url))
+  on_failure:
+    put: slack
+    params:
+      text: |
+        :x: Failed to deploy Doomsday in Tooling
+        <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+      username: ((/slack-user))
+      icon_url: ((/slack-icon-url))
