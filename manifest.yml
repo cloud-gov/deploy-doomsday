@@ -57,7 +57,7 @@ instance_groups:
   stemcell: default
   vm_type: errand_small
   vm_extensions:
-  - name: production-doomsday-lb
+  - production-doomsday-lb
 
 releases:
 - name:    doomsday
