@@ -39,7 +39,7 @@ instance_groups:
         backend:
           properties:
             notify_ok: false
-            webhook: ((/slack-webhook))
+            webhook: ((slack-webhook))
           type: slack
         doomsday_url: "https://doomsday.fr.cloud.gov" 
         schedule:
