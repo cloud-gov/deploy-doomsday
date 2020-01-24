@@ -22,6 +22,7 @@ resources:
     ca_cert: ((bosh.ca-cert))
     deployment: doomsday
 - name: doomsday-deployment-src
+  icon: github-circle
   type: git
   source:
     uri: ((git.source))
@@ -29,11 +30,13 @@ resources:
 - name: slack
   type: slack-notification
   source:
-    url: ((/slack-webhook))
+    url: ((slack-webhook))
 - name: pipeline-variables
+  icon: aws
   type: s3-iam
   source:
     bucket: ((aws.concourse-bucket))
+    private: true
     region_name: ((aws.region))
     versioned_file: cg-deploy-doomsday.yml
 
@@ -66,13 +69,13 @@ jobs:
       text: |
         :white_check_mark: Deployed Doomsday in Tooling
         <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
-      username: ((/slack-user))
-      icon_url: ((/slack-icon-url))
+      username: ((slack-user))
+      icon_url: ((slack-icon-url))
   on_failure:
     put: slack
     params:
       text: |
         :x: Failed to deploy Doomsday in Tooling
         <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
-      username: ((/slack-user))
-      icon_url: ((/slack-icon-url))
+      username: ((slack-user))
+      icon_url: ((slack-icon-url))
