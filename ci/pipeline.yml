@@ -13,6 +13,10 @@ resource_types:
     repository: cloudfoundry/bosh-deployment-resource
 
 resources:
+- name: xenial-stemcell
+  type: bosh-io-stemcell
+  source:
+    name: bosh-aws-xen-hvm-ubuntu-xenial-go_agent
 - name: doomsday
   type: bosh-deployment
   source:
@@ -54,6 +58,9 @@ jobs:
 - name: doomsday-deployment
   plan:
     - in_parallel:
+      # this is just to trigger a deployment, the manifest specifies latest.
+      - get: xenial-stemcell
+        trigger: true
       - get: doomsday
       - get: doomsday-deployment-src
         passed:
@@ -61,8 +68,9 @@ jobs:
         trigger: true
     - put: doomsday
       params:
+        stemcells:
+        - xenial-stemcell/*.tgz
         manifest: doomsday-deployment-src/manifest.yml
-        fix: true
   on_success:
     put: slack
     params:
