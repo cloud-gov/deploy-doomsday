@@ -16,6 +16,7 @@ instance_groups:
             client_secret: ((tooling.client-secret))
             grant_type: client_credentials
           insecure_skip_verify: true # needed because the bosh cert isn't part of the trust store.
+        type: credhub
       - name: development
         properties:
           address: ((dev.address))
