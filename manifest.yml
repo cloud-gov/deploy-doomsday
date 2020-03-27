@@ -8,6 +8,14 @@ instance_groups:
   - name: doomsday
     properties:
       backends:
+      - name: tooling
+        properties:
+          address: ((tooling.address))
+          auth:
+            client_id: ((tooling.client))
+            client_secret: ((tooling.client-secret))
+            grant_type: client_credentials
+          insecure_skip_verify: true # needed because the bosh cert isn't part of the trust store.
       - name: development
         properties:
           address: ((dev.address))
