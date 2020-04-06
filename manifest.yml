@@ -17,6 +17,7 @@ instance_groups:
             grant_type: client_credentials
           insecure_skip_verify: true # needed because the bosh cert isn't part of the trust store.
         type: credhub
+        refresh_internal: 1
       - name: development
         properties:
           address: ((dev.address))
@@ -26,6 +27,7 @@ instance_groups:
             grant_type: client_credentials
           insecure_skip_verify: true # needed because the bosh cert isn't part of the trust store.
         type: credhub
+        refresh_internal: 1
       - name: staging
         properties:
           address: ((staging.address))
@@ -35,6 +37,7 @@ instance_groups:
             grant_type: client_credentials
           insecure_skip_verify: true # needed because the bosh cert isn't part of the trust store.
         type: credhub
+        refresh_internal: 1
       - name: production
         properties:
           address: ((prod.address))
@@ -44,6 +47,7 @@ instance_groups:
             grant_type: client_credentials
           insecure_skip_verify: true # needed because the bosh cert isn't part of the trust store.
         type: credhub
+        refresh_internal: 1
       notifications:
         backend:
           properties:
