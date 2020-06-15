@@ -8,6 +8,16 @@ instance_groups:
   - name: doomsday
     properties:
       backends:
+      - name: master
+        properties:
+          address: ((master.address))
+          auth:
+            client_id: ((master.client))
+            client_secret: ((master.client-secret))
+            grant_type: client_credentials
+          insecure_skip_verify: true # needed because the bosh cert isn't part of the trust store.
+        type: credhub
+        refresh_internal: 1
       - name: tooling
         properties:
           address: ((tooling.address))
@@ -48,13 +58,18 @@ instance_groups:
           insecure_skip_verify: true # needed because the bosh cert isn't part of the trust store.
         type: credhub
         refresh_internal: 1
+      - name: masterbosh
+        properties:
+          hosts: ((master.hosts))
+        type: tlsclient
+        refresh_internal: 1
       notifications:
         backend:
           properties:
             notify_ok: false
             webhook: ((slack-webhook))
           type: slack
-        doomsday_url: "https://doomsday.fr.cloud.gov" 
+        doomsday_url: "https://doomsday.fr.cloud.gov"
         schedule:
           properties:
             interval: 1440
