@@ -61,7 +61,6 @@ jobs:
       # this is just to trigger a deployment, the manifest specifies latest.
       - get: xenial-stemcell
         trigger: true
-      - get: doomsday
       - get: doomsday-deployment-src
         passed:
         - reconfigure
