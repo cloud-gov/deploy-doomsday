@@ -38,6 +38,16 @@ instance_groups:
           insecure_skip_verify: true # needed because the bosh cert isn't part of the trust store.
         type: credhub
         refresh_internal: 1
+      - name: credhub-staging
+        properties:
+          address: ((credhub-staging.address))
+          auth:
+            client_id: ((credhub-staging.client))
+            client_secret: ((credhub-staging.client-secret))
+            grant_type: client_credentials
+          insecure_skip_verify: true # needed because the bosh cert isn't part of the trust store.
+        type: credhub
+        refresh_internal: 1
       - name: staging
         properties:
           address: ((staging.address))
