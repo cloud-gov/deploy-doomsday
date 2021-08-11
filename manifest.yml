@@ -103,6 +103,7 @@ instance_groups:
   name: doomsday
   networks:
   - name: production-monitoring
+  persistent_disk_type: 5GB
   stemcell: default
   vm_type: t3.medium
   vm_extensions:
