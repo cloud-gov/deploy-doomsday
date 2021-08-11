@@ -113,12 +113,12 @@ releases:
   version: 0.9.0
   url:     https://github.com/doomsday-project/doomsday-boshrelease/releases/download/v0.9.0/doomsday-0.9.0.tgz
   sha1:    bd066be11570de9689dd47519352dcde20cb8982
-- name: bosh-dns-aliases  
+- name: bosh-dns-aliases
   version: latest
 
 stemcells:
 - alias: default
-  os: ubuntu-xenial
+  os: ubuntu-bionic
   version: latest
 
 update:
