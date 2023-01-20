@@ -36,26 +36,16 @@ resources:
   type: slack-notification
   source:
     url: ((slack-webhook))
-- name: pipeline-variables
-  icon: aws
-  type: s3-iam
-  source:
-    bucket: ((aws.concourse-bucket))
-    private: true
-    region_name: ((aws.region))
-    versioned_file: cg-deploy-doomsday.yml
 
 jobs:
 - name: reconfigure
   plan:
     - get: doomsday-deployment-src
       trigger: true
-    - get: pipeline-variables
-      trigger: true
     - set_pipeline: deploy-doomsday
       file: doomsday-deployment-src/ci/pipeline.yml
       var_files:
-        - pipeline-variables/cg-deploy-doomsday.yml
+        - doomsday-deployment-src/ci/config.yml
 - name: doomsday-deployment
   plan:
     - in_parallel:

@@ -4,4 +4,4 @@ This repository is a reference for deploying the Doomsday Project.
 
 ### Deploying
 
-It's pretty simple, just copy and fill out the credential examples, then configure the pipeline with `fly set-pipeline -p doomsday -c ci/pipeline.yml -l ci/credentials.yml`.
+The Doomsday Concourse pipeline sets itself when new changes are merged to master on GitHub. Variables are interpolated from `ci/config.yml` and from CredHub. See `internal-docs` for more.
