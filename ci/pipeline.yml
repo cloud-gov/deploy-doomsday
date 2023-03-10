@@ -13,7 +13,7 @@ resource_types:
     repository: cloudfoundry/bosh-deployment-resource
 
 resources:
-- name  jammy-stemcell
+- name:  jammy-stemcell
   type: bosh-io-stemcell
   source:
     name: bosh-aws-xen-hvm-ubuntu-jammy-go_agent
