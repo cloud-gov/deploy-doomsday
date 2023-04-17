@@ -3,4 +3,4 @@ slack-icon-url: https://avatars1.githubusercontent.com/u/7809479?v=3&s=40
 
 git:
   source: https://github.com/cloud-gov/cg-deploy-doomsday
-  branch: master
+  branch: main
