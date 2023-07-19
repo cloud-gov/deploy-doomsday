@@ -73,6 +73,11 @@ instance_groups:
           hosts: ((master.hosts))
         type: tlsclient
         refresh_internal: 1
+      - name: prod-urls
+        properties:
+          hosts: ((prod.hosts))
+        type: tlsclient
+        refresh_internal: 1
       notifications:
         backend:
           properties:
