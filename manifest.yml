@@ -87,7 +87,7 @@ instance_groups:
         doomsday_url: "https://doomsday.fr.cloud.gov"
         schedule:
           properties:
-            interval: 1440
+            interval: 360
           type: constant
       server:
         auth:
