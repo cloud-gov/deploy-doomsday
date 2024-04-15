@@ -5,7 +5,7 @@ resource_types:
       aws_access_key_id: ((ecr_aws_key))
       aws_secret_access_key: ((ecr_aws_secret))
       repository: registry-image-resource
-      aws_region: us-gov-west-1
+      aws_region: ((aws_region))
       tag: latest
 
   - name: s3-iam
@@ -14,7 +14,7 @@ resource_types:
       aws_access_key_id: ((ecr_aws_key))
       aws_secret_access_key: ((ecr_aws_secret))
       repository: s3-resource
-      aws_region: us-gov-west-1
+      aws_region: ((aws_region))
       tag: latest
 
   - name: slack-notification
@@ -23,7 +23,7 @@ resource_types:
       aws_access_key_id: ((ecr_aws_key))
       aws_secret_access_key: ((ecr_aws_secret))
       repository: slack-notification-resource
-      aws_region: us-gov-west-1
+      aws_region: ((aws_region))
       tag: latest
 
   - name: bosh-deployment
