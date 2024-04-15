@@ -54,7 +54,7 @@ resources:
   - name: slack
     type: slack-notification
     source:
-      url: ((slack-webhook))
+      url: ((slack-webhook-url))
 
 jobs:
   - name: reconfigure
