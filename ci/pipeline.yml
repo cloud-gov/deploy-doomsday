@@ -48,8 +48,8 @@ resources:
     icon: github-circle
     type: git
     source:
-      uri: ((git.source))
-      branch: ((git.branch))
+      uri: https://github.com/cloud-gov/cg-deploy-doomsday
+      branch: ((doomsday.git.branch))
       commit_verification_keys: ((cloud-gov-pgp-keys))
   - name: slack
     type: slack-notification
