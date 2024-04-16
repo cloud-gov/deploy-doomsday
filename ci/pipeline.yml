@@ -76,8 +76,8 @@ jobs:
           - get: jammy-stemcell
             trigger: true
           - get: doomsday-deployment-src
-            passed:
-              - reconfigure
+            # passed:
+            #   - reconfigure
             trigger: true
       - put: doomsday
         tags: [iaas]
