@@ -34,12 +34,10 @@ resource_types:
 resources:
   - name: jammy-stemcell
     type: bosh-io-stemcell
-    tags: [iaas]
     source:
       name: bosh-aws-xen-hvm-ubuntu-jammy-go_agent
   - name: doomsday
     type: bosh-deployment
-    tags: [iaas]
     source:
       target: ((bosh.target))
       client: ((bosh.client))
@@ -49,14 +47,12 @@ resources:
   - name: doomsday-deployment-src
     icon: github-circle
     type: git
-    tags: [iaas]
     source:
       uri: https://github.com/cloud-gov/cg-deploy-doomsday
       branch: ((doomsday.git.branch))
       commit_verification_keys: ((cloud-gov-pgp-keys))
   - name: slack
     type: slack-notification
-    tags: [iaas]
     source:
       url: ((slack-webhook-url))
 
@@ -80,26 +76,23 @@ jobs:
             #   - reconfigure
             trigger: true
       - put: doomsday
-        tags: [iaas]
         params:
           stemcells:
             - jammy-stemcell/*.tgz
           manifest: doomsday-deployment-src/manifest.yml
-    on_success:
-      put: slack
-      tags: [iaas]
-      params:
-        text: |
-          :white_check_mark: Deployed Doomsday in Tooling
-          <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
-        username: ((slack-user))
-        icon_url: ((slack-icon-url))
-    on_failure:
-      put: slack
-      tags: [iaas]
-      params:
-        text: |
-          :x: Failed to deploy Doomsday in Tooling
-          <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
-        username: ((slack-user))
-        icon_url: ((slack-icon-url))
+    # on_success:
+    #   put: slack
+    #   params:
+    #     text: |
+    #       :white_check_mark: Deployed Doomsday in Tooling
+    #       <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+    #     username: ((slack-user))
+    #     icon_url: ((slack-icon-url))
+    # on_failure:
+    #   put: slack
+    #   params:
+    #     text: |
+    #       :x: Failed to deploy Doomsday in Tooling
+    #       <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+    #     username: ((slack-user))
+    #     icon_url: ((slack-icon-url))
