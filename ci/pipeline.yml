@@ -57,14 +57,14 @@ resources:
       url: ((slack-webhook-url))
 
 jobs:
-  - name: reconfigure
-    plan:
-      - get: doomsday-deployment-src
-        trigger: true
-      - set_pipeline: deploy-doomsday
-        file: doomsday-deployment-src/ci/pipeline.yml
-        var_files:
-          - doomsday-deployment-src/ci/config.yml
+  # - name: reconfigure
+  #   plan:
+  #     - get: doomsday-deployment-src
+  #       trigger: true
+  #     - set_pipeline: deploy-doomsday
+  #       file: doomsday-deployment-src/ci/pipeline.yml
+  #       var_files:
+  #         - doomsday-deployment-src/ci/config.yml
   - name: doomsday-deployment
     plan:
       - in_parallel:
