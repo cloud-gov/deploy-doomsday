@@ -2,19 +2,19 @@ resource_types:
   - name: registry-image
     type: registry-image
     source:
-      aws_access_key_id: ((ecr_aws_key))
-      aws_secret_access_key: ((ecr_aws_secret))
+      aws_access_key_id: ((aws.access_key_id))
+      aws_secret_access_key: ((aws.secret_access_key))
       repository: registry-image-resource
-      aws_region: ((aws_region))
+      aws_region: ((aws.region))
       tag: latest
 
   - name: s3-iam
     type: registry-image
     source:
-      aws_access_key_id: ((ecr_aws_key))
-      aws_secret_access_key: ((ecr_aws_secret))
+      aws_access_key_id: ((aws.access_key_id))
+      aws_secret_access_key: ((aws.secret_access_key))
       repository: s3-resource
-      aws_region: ((aws_region))
+      aws_region: ((aws.region))
       tag: latest
 
   # - name: slack-notification
@@ -50,7 +50,7 @@ resources:
     source:
       uri: https://github.com/cloud-gov/cg-deploy-doomsday
       branch: ((doomsday.git.branch))
-      commit_verification_keys: ((cloud-gov-pgp-keys))
+      commit_verification_keys: ((commit_verification_keys))
   # - name: slack
   #   type: slack-notification
   #   source:
@@ -75,6 +75,7 @@ jobs:
             # passed:
             #   - reconfigure
             trigger: true
+
       - put: doomsday
         params:
           stemcells:
