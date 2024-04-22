@@ -39,10 +39,10 @@ resources:
   - name: doomsday
     type: bosh-deployment
     source:
-      target: ((bosh.target))
-      client: ((bosh.client))
-      client_secret: ((bosh.client-secret))
-      ca_cert: ((bosh.ca-cert))
+      target: ((bosh_director.target))
+      client: ((bosh_director.client))
+      client_secret: ((bosh_director.client_secret))
+      ca_cert: ((bosh_director.ca_cert))
       deployment: doomsday
   - name: doomsday-deployment-src
     icon: github-circle
