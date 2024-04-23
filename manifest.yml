@@ -8,83 +8,28 @@ instance_groups:
   - name: doomsday
     properties:
       backends:
-      - name: master
+      - name: tooling-credhub
         properties:
-          address: ((master.address))
+          address: ((tooling_bosh.target))
           auth:
-            client_id: ((master.client))
-            client_secret: ((master.client-secret))
+            client_id: ((tooling_bosh.client_id))
+            client_secret: ((tooling_bosh.client_secret))
             grant_type: client_credentials
           insecure_skip_verify: true # needed because the bosh cert isn't part of the trust store.
         type: credhub
         refresh_internal: 1
-      - name: tooling
+      - name: tooling-bosh-tls
         properties:
-          address: ((tooling.address))
-          auth:
-            client_id: ((tooling.client))
-            client_secret: ((tooling.client-secret))
-            grant_type: client_credentials
-          insecure_skip_verify: true # needed because the bosh cert isn't part of the trust store.
-        type: credhub
-        refresh_internal: 1
-      - name: development
-        properties:
-          address: ((dev.address))
-          auth:
-            client_id: ((dev.client))
-            client_secret: ((dev.client-secret))
-            grant_type: client_credentials
-          insecure_skip_verify: true # needed because the bosh cert isn't part of the trust store.
-        type: credhub
-        refresh_internal: 1
-      - name: credhub-staging
-        properties:
-          address: ((credhub-staging.address))
-          auth:
-            client_id: ((credhub-staging.client))
-            client_secret: ((credhub-staging.client-secret))
-            grant_type: client_credentials
-          insecure_skip_verify: true # needed because the bosh cert isn't part of the trust store.
-        type: credhub
-        refresh_internal: 1
-      - name: staging
-        properties:
-          address: ((staging.address))
-          auth:
-            client_id: ((staging.client))
-            client_secret: ((staging.client-secret))
-            grant_type: client_credentials
-          insecure_skip_verify: true # needed because the bosh cert isn't part of the trust store.
-        type: credhub
-        refresh_internal: 1
-      - name: production
-        properties:
-          address: ((prod.address))
-          auth:
-            client_id: ((prod.client))
-            client_secret: ((prod.client-secret))
-            grant_type: client_credentials
-          insecure_skip_verify: true # needed because the bosh cert isn't part of the trust store.
-        type: credhub
-        refresh_internal: 1
-      - name: masterbosh
-        properties:
-          hosts: ((master.hosts))
-        type: tlsclient
-        refresh_internal: 1
-      - name: prod-urls
-        properties:
-          hosts: ((prod.hosts))
+          hosts: ((tooling_bosh.hosts))
         type: tlsclient
         refresh_internal: 1
       notifications:
         backend:
           properties:
             notify_ok: false
-            webhook: ((slack-webhook))
+            webhook: ((/slack_webhook_url))
           type: slack
-        doomsday_url: "https://doomsday.fr.cloud.gov"
+        doomsday_url: "https://doomsday.((/domain))"
         schedule:
           properties:
             interval: 360
