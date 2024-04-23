@@ -32,10 +32,10 @@ resource_types:
       repository: cloudfoundry/bosh-deployment-resource
 
 resources:
-  - name: jammy-stemcell
-    type: bosh-io-stemcell
-    source:
-      name: bosh-aws-xen-hvm-ubuntu-jammy-go_agent
+  # - name: jammy-stemcell
+  #   type: bosh-io-stemcell
+  #   source:
+  #     name: bosh-aws-xen-hvm-ubuntu-jammy-go_agent
   - name: doomsday
     type: bosh-deployment
     source:
@@ -69,8 +69,8 @@ jobs:
     plan:
       - in_parallel:
           # this is just to trigger a deployment, the manifest specifies latest.
-          - get: jammy-stemcell
-            trigger: true
+          # - get: jammy-stemcell
+          #   trigger: true
           - get: doomsday-deployment-src
             # passed:
             #   - reconfigure
@@ -78,8 +78,8 @@ jobs:
 
       - put: doomsday
         params:
-          stemcells:
-            - jammy-stemcell/*.tgz
+          # stemcells:
+          #   - jammy-stemcell/*.tgz
           manifest: doomsday-deployment-src/manifest.yml
     # on_success:
     #   put: slack
