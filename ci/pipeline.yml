@@ -40,7 +40,7 @@ resources:
     type: bosh-deployment
     source:
       target: ((bosh_director.target))
-      client: ((bosh_director.client))
+      client: ((bosh_director.client_id))
       client_secret: ((bosh_director.client_secret))
       ca_cert: ((bosh_director.ca_cert))
       deployment: doomsday
