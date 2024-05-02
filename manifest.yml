@@ -59,7 +59,7 @@ instance_groups:
   name: doomsday
   networks:
   - name: production-monitoring
-  persistent_disk_type: 5GB
+  persistent_disk_type: 10GB
   stemcell: fips
   vm_type: t3.medium
   vm_extensions:
