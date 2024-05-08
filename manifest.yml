@@ -1,13 +1,13 @@
 name: doomsday
 
 stemcells:
-# - alias: fips
-#   os: ubuntu-jammy
-#   version: latest
-#   name: bosh-aws-xen-ubuntu-jammy-fips-go_agent
-- alias: default
+- alias: fips
   os: ubuntu-jammy
   version: latest
+  name: bosh-aws-xen-ubuntu-jammy-fips-go_agent
+# - alias: default
+#   os: ubuntu-jammy
+#   version: latest
 
 
 instance_groups:
@@ -64,7 +64,7 @@ instance_groups:
   networks:
   - name: production-monitoring
   persistent_disk_type: 10GB
-  stemcell: default
+  stemcell: fips
   vm_type: t3.medium
   vm_extensions:
   - production-doomsday-lb
