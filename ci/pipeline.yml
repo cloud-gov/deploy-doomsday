@@ -102,14 +102,6 @@ jobs:
           stemcells:
             - jammy-stemcell/*.tgz
           manifest: doomsday-deployment-src/manifest.yml
-    on_success:
-      put: slack
-      params:
-        text: |
-          :white_check_mark: Deployed Doomsday in Tooling
-          <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
-        username: ((slack-user))
-        icon_url: ((slack-icon-url))
     on_failure:
       put: slack
       params:
