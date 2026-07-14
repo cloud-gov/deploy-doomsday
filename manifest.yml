@@ -94,6 +94,8 @@ instance_groups:
           type: none
         port: 80
     release: doomsday
+  - name: bpm
+    release: bpm
   - name: bosh-dns-aliases
     release: bosh-dns-aliases
     properties:
@@ -121,6 +123,8 @@ releases:
   sha1:    e17a5ee70875a19926f80879e8baf9ac3244c981
 - name: bosh-dns-aliases
   version: latest
+- name: bpm
+  version: bpm
 
 stemcells:
 - alias: default
