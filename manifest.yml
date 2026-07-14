@@ -124,7 +124,7 @@ releases:
 - name: bosh-dns-aliases
   version: latest
 - name: bpm
-  version: bpm
+  version: latest
 
 stemcells:
 - alias: default
