@@ -57,7 +57,7 @@ resources:
   - name: noble-stemcell
     type: bosh-io-stemcell
     source:
-      name: bosh-aws-xen-hvm-ubuntu-noble-go_agent
+      name: bosh-aws-xen-hvm-ubuntu-noble
   - name: doomsday
     type: bosh-deployment
     source:
